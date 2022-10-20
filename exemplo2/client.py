@@ -43,6 +43,10 @@ def client() -> None:
 
         # Read user's input until it quit from chat and close connection
         while True:
+            print('Insira seu nome de usuário:')
+            username = input()
+            print(username + 'conectado!')
+            print('Digite sua mensagem: ')
             msg = input()
 
             if msg == 'quit':

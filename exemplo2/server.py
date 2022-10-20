@@ -1,4 +1,6 @@
 import socket, threading
+from datetime import datetime
+from datetime import datetime
 
 LISTENING_PORT = 12000
 
@@ -14,12 +16,15 @@ def handle_user_connection(connection: socket.socket, address: str) -> None:
         try:
             # Get client message
             msg = connection.recv(1024)
-
+        
             # If no message is received, there is a chance that connection has ended
             # so in this case, we need to close connection and remove it from connections list.
             if msg:
+                #horário mensagem
+                horarioMSG = datetime.now()
+
                 # Log message sent by user
-                print(f'{address[0]}:{address[1]} - {msg.decode()}')
+                print(f'{address[0]}:{address[1]} - {msg.decode()} - {horarioMSG.strftime("%H:%M")} ')
                 
                 # Build message format and broadcast to users connected on server
                 msg_to_send = f'From {address[0]}:{address[1]} - {msg.decode()}'
