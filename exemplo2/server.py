@@ -5,7 +5,7 @@ from datetime import datetime
 LISTENING_PORT = 12000
 
 # Global variable that mantain client's connections
-connections = []
+connections = ['192.168.0.116']
 
 def handle_user_connection(connection: socket.socket, address: str) -> None:
     '''
@@ -15,6 +15,7 @@ def handle_user_connection(connection: socket.socket, address: str) -> None:
     while True:
         try:
             # Get client message
+            username = connection.recv(1024)
             msg = connection.recv(1024)
         
             # If no message is received, there is a chance that connection has ended
@@ -24,7 +25,7 @@ def handle_user_connection(connection: socket.socket, address: str) -> None:
                 horarioMSG = datetime.now()
 
                 # Log message sent by user
-                print(f'{address[0]}:{address[1]} - {msg.decode()} - {horarioMSG.strftime("%H:%M")} ')
+                print(f'{address[0]}:{address[1]} - {username} - {msg.decode()} - {horarioMSG.strftime("%H:%M")}')
                 
                 # Build message format and broadcast to users connected on server
                 msg_to_send = f'From {address[0]}:{address[1]} - {msg.decode()}'

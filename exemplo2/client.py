@@ -1,6 +1,4 @@
-import socket, threading
-
-SERVER_ADDRESS = '192.168.0.106'
+SERVER_ADDRESS = '192.168.0.116'
 SERVER_PORT = 12000
 
 def handle_messages(connection: socket.socket):
@@ -9,7 +7,7 @@ def handle_messages(connection: socket.socket):
     '''
 
     while True:
-        try:
+        try: 
             msg = connection.recv(1024)
 
             # If there is no message, there is a chance that connection has closed
@@ -45,18 +43,20 @@ def client() -> None:
         while True:
             print('Insira seu nome de usuário:')
             username = input()
-            print(username + 'conectado!')
+            print(username + ' conectado!')
             print('Digite sua mensagem: ')
             msg = input()
 
             if msg == 'quit':
                 break
 
-            # Parse message to utf-8
-            socket_instance.send(msg.encode())
+            if username != '' :
+                # Parse message to utf-8
+                socket_instance.send(username.encode())
+                socket_instance.send(msg.encode())
 
         # Close connection with the server
-        socket_instance.close()
+        # socket_instance.close()
 
     except Exception as e:
         print(f'Error connecting to server socket {e}')
