@@ -1,3 +1,8 @@
+import getpass
+from simplecrypt import encrypt,decrypt
+from datetime import datetime
+
+palavraChave = getpass.getpass('aFVa95Sa122')
 SERVER_ADDRESS = '192.168.0.116'
 SERVER_PORT = 12000
 
@@ -8,13 +13,13 @@ def handle_messages(connection: socket.socket):
 
     while True:
         try: 
-            msg = connection.recv(1024)
+            descrypMSG = (decrypt(palavraChave, connection.recv(1024)).decode('utf-8'))
 
             # If there is no message, there is a chance that connection has closed
             # so the connection will be closed and an error will be displayed.
             # If not, it will try to decode message in order to show to user.
-            if msg:
-                print(msg.decode())
+            if descrypMSG:
+                print(descrypMSG)
             else:
                 connection.close()
                 break
@@ -41,6 +46,8 @@ def client() -> None:
 
         # Read user's input until it quit from chat and close connection
         while True:
+            horarioMSG = datetime.now()
+
             print('Insira seu nome de usuário:')
             username = input()
             print(username + ' conectado!')
@@ -52,8 +59,9 @@ def client() -> None:
 
             if username != '' :
                 # Parse message to utf-8
-                socket_instance.send(username.encode())
-                socket_instance.send(msg.encode())
+                encrypMSG = encrypt(palavraChave,(f'{username} - {msg} - {horarioMSG.strftime("%H:%M")}'));
+
+                socket_instance.send(encrypMSG.encode())
 
         # Close connection with the server
         # socket_instance.close()
