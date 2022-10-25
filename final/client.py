@@ -70,7 +70,7 @@ def handleMessages(connection: socket.socket):
             # Caso exista uma mensagem ela será processada, caso contrário será finalizada
             if msg:
                 # Exibe a mensagem no terminal com hora e minuto
-                print(f'\nMensagem recebida {datetime.now().strftime("%H:%M")} > {do_decrypt(msg).decode()}')
+                print(f'\nMensagem recebida de {connection.getsockname()} - {datetime.now().strftime("%H:%M")} > {do_decrypt(msg).decode()}')
             else:
                 connection.close()
                 break
