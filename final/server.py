@@ -1,6 +1,7 @@
 import socket, threading
 import platform
 
+LIMIT_USERS = 10
 SERVER_PORT = 12000
 CONEXOES = []
 
@@ -61,7 +62,7 @@ def startServer() -> None:
             socket_instance.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 
         socket_instance.bind(('', SERVER_PORT))
-        socket_instance.listen(4)
+        socket_instance.listen(LIMIT_USERS)
 
         print('Servidor iniciado!')
 
