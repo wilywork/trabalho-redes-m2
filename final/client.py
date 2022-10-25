@@ -5,7 +5,6 @@ from cryptography.fernet import Fernet
 KEY_CRYPTO = 'TyLTOB9m2EjFLEbyWZK1pr7zU1ZmSN25gFIpXb2LjnY='
 SERVER_ADDRESS = '127.0.0.1'
 SERVER_PORT = 12000
-print(KEY_CRYPTO)
 FERNET = Fernet(KEY_CRYPTO)
 
 # Inicializa o Chat
