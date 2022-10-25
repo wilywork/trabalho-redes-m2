@@ -1,4 +1,5 @@
 import socket, threading
+import platform
 
 socket_instance = ''
 SERVER_PORT = 12000
@@ -55,7 +56,11 @@ def startServer() -> None:
     try:
         # Cria o servidor
         socket_instance = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        socket_instance.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        if platform.system() == 'Linux':
+            socket_instance.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
+        else:
+            socket_instance.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
         socket_instance.bind(('', SERVER_PORT))
         socket_instance.listen(4)
 
