@@ -1,24 +1,24 @@
 import socket, threading
 import platform
 
-LIMIT_USERS = 10
-SERVER_PORT = 12000
+LIMIT_USERS = 4
 CONEXOES = []
 
 def main() -> None:
-    coletarDados()
-    startServer()
+    SERVER_PORT = coletarDados()
+    startServer(SERVER_PORT)
 
 # Coleta os dados para iniciar o servidor
 def coletarDados() -> None:
     try:
         SERVER_PORT = int(input('Insira a porta do servidor, exemplo(12000): '))
         if SERVER_PORT >= 1 & SERVER_PORT <= 65535:
-            print(f'Ligando servidor na porta: {str(SERVER_PORT)}')
+            print('Iniciando...')
         else:
             raise Exception('Informe um número de 1-65535')
     except Exception as e:
         print(f'Porta inválida, {e}')
+    return SERVER_PORT
 
 def handleUserConnection(connection: socket.socket, address: str) -> None:
     while True:
@@ -52,7 +52,7 @@ def remove_connection(conn: socket.socket) -> None:
         CONEXOES.remove(conn)
 
 # Processo principal que recebe as conexões do cliente e inicia uma nova thread para lidar com suas mensagens
-def startServer() -> None:
+def startServer(SERVER_PORT) -> None:
     try:
         # Cria o servidor
         socket_instance = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -60,7 +60,7 @@ def startServer() -> None:
             socket_instance.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 1)
         else:
             socket_instance.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-
+        print(f'Ligando servidor na porta: {str(SERVER_PORT)}')
         socket_instance.bind(('', SERVER_PORT))
         socket_instance.listen(LIMIT_USERS)
 

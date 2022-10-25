@@ -3,37 +3,36 @@ from datetime import datetime
 from cryptography.fernet import Fernet
 
 KEY_CRYPTO = 'TyLTOB9m2EjFLEbyWZK1pr7zU1ZmSN25gFIpXb2LjnY='
-SERVER_ADDRESS = '127.0.0.1'
-SERVER_PORT = 12000
 FERNET = Fernet(KEY_CRYPTO)
 
 # Inicializa o Chat
 def main():
     try:
-        coletarDados()
-        socket_instance = connection()
+        dados = coletarDados()
+        socket_instance = connection(dados[0], dados[1])
         terminalInterativoDoChat(socket_instance)
     except Exception as e:
         print(f'Error {e}')
 
 # Coleta os dados de acesso e nick do usuário
-def coletarDados() -> None:
+def coletarDados():
     try:
         SERVER_ADDRESS = input('Insira o endereço do servidor, exemplo(127.0.0.1): ')
         SERVER_PORT = int(input('Insira a porta do servidor, exemplo(12000): '))
-        print('Conectando ao servidor: ' + SERVER_ADDRESS + ':' + str(SERVER_PORT))
     except Exception as e:
         print(f'Dados informados inválidos: {e}')
+    return [SERVER_ADDRESS, SERVER_PORT]
 
 # Finaliza a conexão com o servidor
 def quitChat(socket_instance) -> None:
     socket_instance.close()
 
 # Inicia a conexão com o servidor
-def connection():
+def connection(SERVER_ADDRESS, SERVER_PORT):
     try:
         # Instanciar socket
         socket_instance = socket.socket()
+        print('Conectando ao servidor: ' + SERVER_ADDRESS + ':' + str(SERVER_PORT))
         # Iniciar conexão com servidor
         socket_instance.connect((SERVER_ADDRESS, SERVER_PORT))
         # Crie um thread(processo) para lidar com mensagens enviadas pelo servidor
