@@ -1,7 +1,6 @@
 import socket, threading
 import platform
 
-socket_instance = ''
 SERVER_PORT = 12000
 CONEXOES = []
 
@@ -76,7 +75,7 @@ def startServer() -> None:
                 threading.Thread(target=handleUserConnection, args=[socket_connection, address]).start()
         except Exception as e:
             print(f'Ocorreu um erro ao instanciar o socket: {e}')
-        
+
     except Exception as e:
         print(f'Erro ao inicializar servidor: {e}')
 
