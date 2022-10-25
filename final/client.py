@@ -20,8 +20,8 @@ def main():
 # Coleta os dados de acesso e nick do usuário
 def coletarDados() -> None:
     try:
-        # SERVER_ADDRESS = input('Insira o endereço do servidor, exemplo(127.0.0.1): ')
-        # SERVER_PORT = int(input('Insira a porta do servidor, exemplo(12000): '))
+        SERVER_ADDRESS = input('Insira o endereço do servidor, exemplo(127.0.0.1): ')
+        SERVER_PORT = int(input('Insira a porta do servidor, exemplo(12000): '))
         print('Conectando ao servidor: ' + SERVER_ADDRESS + ':' + str(SERVER_PORT))
     except Exception as e:
         print(f'Dados informados inválidos: {e}')
